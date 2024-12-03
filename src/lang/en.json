@@ -1,0 +1,90 @@
+{
+    "app.affichage": "Nothing to display.",
+    "app.connexion.titre": "Login",
+    "app.connexion.soumettre": "Log in",
+    "app.formulaire.champ.vide": "This field is required.",
+    "app.formulaire.email.invalide": "Invalid email: incorrect format",
+
+    "app.chemin.personnages": "My characters",
+    "app.chemin.ajouter": "Add a character",
+    "app.chemin.documentation": "API Documentation",
+
+    "app.deconnexion": "Log out",
+
+    "app.tri.date": "Sort by date",
+    "app.tri.titre": "Character Sorting",
+    "app.tri.date.asc": "Show the most recent first",
+    "app.tri.date.desc": "Show the least recent first",
+
+    "app.tri.niveau": "Sort by level",
+    "app.tri.niveau.desc": "Show higher levels first",
+    "app.tri.niveau.asc": "Show lower levels first",
+
+    "app.tri.annuler": "Cancel",
+    "app.tri.confirmer": "Submit",
+
+    "app.formulaire.ajout.defaut": "To be filled...",
+    "app.formulaire.ajout.tableau.defaut": "Please, write, like, this",
+
+    "app.formulaire.titre.identification": "Identification",
+    "app.formulaire.prenom": "First name",
+    "app.formulaire.nom": "Last name",
+    "app.formulaire.classe": "Class",
+        "app.formulaire.classe.nain": "Dwarf",
+        "app.formulaire.classe.elf": "Elf",
+        "app.formulaire.classe.humain": "Human",
+        "app.formulaire.classe.orc": "Orc",
+    "app.formulaire.niveau": "Level",
+
+    "app.formulaire.titre.sante": "Health",
+    "app.formulaire.pointsdevie": "Hit points",
+
+    "app.formulaire.titre.caracteristiques": "Characteristics",
+        "app.formulaire.pointsdeforce": "Strength points",
+        "app.formulaire.pointsdedexterite": "Dexterity points",
+        "app.formulaire.pointsdintelligence": "Intelligence points",
+        "app.formulaire.pointsdesagesse": "Wisdom points",
+        "app.formulaire.pointsdecharisme": "Charisma points",
+
+    "app.formulaire.competences": "Skills",
+
+    "app.formulaire.capacites": "Abilities",
+
+    "app.formulaire.equipement": "Equipment",
+
+    "app.formulaire.ajout.soumission": "Add character",
+    "app.formulaire.edit.soumission": "Edit character",
+
+    "app.formulaire.messageErreur.nom.vide": "This field cannot be empty.",
+    "app.formulaire.messageErreur.nom.identique": "The last name must be different from the first name.",
+    "app.formulaire.messageErreur.prenom.identique": "The first name must be different from the last name.",
+
+    "app.formulaire.messageErreur.classe": "You must select a class.",
+
+    "app.formulaire.messageErreur.niveau.insuffisant": "The level must be greater than 0.",
+    "app.formulaire.messageErreur.niveau.sureleve": "The level must be less than 20.",
+
+    "app.formulaire.messageErreur.pointsDeVie.insuffisant": "Hit points must be greater than 0.",
+    "app.formulaire.messageErreur.pointsDeVie.sureleve": "Hit points must be less than 50.",
+
+    "app.formulaire.messageErreur.caracteristique.force.insuffisant": "Strength must be greater than 0.",
+    "app.formulaire.messageErreur.caracteristique.force.sureleve": "Strength must be less than 20.",
+
+    "app.formulaire.messageErreur.caracteristique.dexterite.insuffisant": "Dexterity must be greater than 0.",
+    "app.formulaire.messageErreur.caracteristique.dexterite.sureleve": "Dexterity must be less than 20.",
+
+    "app.formulaire.messageErreur.caracteristique.sagesse.insuffisant": "Wisdom must be greater than 0.",
+    "app.formulaire.messageErreur.caracteristique.sagesse.sureleve": "Wisdom must be less than 20.",
+
+    "app.formulaire.messageErreur.caracteristique.intelligence.insuffisant": "Intelligence must be greater than 0.",
+    "app.formulaire.messageErreur.caracteristique.intelligence.sureleve": "Intelligence must be less than 20.",
+
+    "app.formulaire.messageErreur.caracteristique.charisme.insuffisant": "Charisma must be greater than 0.",
+    "app.formulaire.messageErreur.caracteristique.charisme.sureleve": "Charisma must be less than 20.",
+
+    "app.formulaire.messageErreur.tableau.vide": "You must have at least one item.",
+    "app.formulaire.messageErreur.tableau.valeurvide": "You cannot have an empty slot.",
+    "app.formulaire.messageErreur.tableau.surremplis": "You have too many items.",
+
+    "app.chargement": "Loading..."
+}

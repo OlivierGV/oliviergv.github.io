@@ -1,0 +1,90 @@
+{
+    "app.affichage": "Rien à afficher.",
+    "app.connexion.titre": "Connexion",
+    "app.connexion.soumettre": "Se connecter",
+    "app.formulaire.champ.vide": "Champ obligatoire.",
+    "app.formulaire.email.invalide": "Email invalide : format",
+
+    "app.chemin.personnages": "Mes personnages",
+    "app.chemin.ajouter": "Ajouter un personnage",
+    "app.chemin.documentation": "Documentation API",
+
+    "app.deconnexion": "Se déconnecter",
+
+    "app.tri.date": "Trier par date",
+    "app.tri.titre":"Triage des personnages",
+    "app.tri.date.asc": "Montrer les plus récents d'abord",
+    "app.tri.date.desc": "Montrer les moins récents d'abord",
+
+    "app.tri.niveau": "Trier par niveau",
+    "app.tri.niveau.desc": "Montrer les plus gros niveaux d'abord",
+    "app.tri.niveau.asc": "Montrer les moins gros niveaux d'abord",
+
+    "app.tri.annuler": "Annuler",
+    "app.tri.confirmer": "Soumettre",
+
+    "app.formulaire.ajout.defaut": "À remplir...",
+    "app.formulaire.ajout.tableau.defaut": "Veuillez, écrire, comme, ceci",
+
+    "app.formulaire.titre.identification": "Identification",
+    "app.formulaire.prenom": "Prénom",
+    "app.formulaire.nom": "Nom",
+    "app.formulaire.classe" : "Classe",
+        "app.formulaire.classe.nain" : "Nain",
+        "app.formulaire.classe.elf" : "Elf",
+        "app.formulaire.classe.humain" : "Humain",
+        "app.formulaire.classe.orc" : "Orc",
+    "app.formulaire.niveau": "Niveau",
+
+    "app.formulaire.titre.sante": "Santé globale",
+    "app.formulaire.pointsdevie": "Points de vie",
+
+    "app.formulaire.titre.caracteristiques": "Caractéristiques",
+        "app.formulaire.pointsdeforce": "Points de force",
+        "app.formulaire.pointsdedexterite": "Points de dextérité",
+        "app.formulaire.pointsdintelligence": "Points d'intelligence",
+        "app.formulaire.pointsdesagesse": "Points de sagesse",
+        "app.formulaire.pointsdecharisme": "Points de charisme",
+
+    "app.formulaire.competences": "Compétences",
+
+    "app.formulaire.capacites": "Capacités",
+
+    "app.formulaire.equipement": "Équipement",
+
+    "app.formulaire.ajout.soumission": "Ajouter le personnage",
+    "app.formulaire.edit.soumission": "Modifier le personnage",
+
+    "app.formulaire.messageErreur.nom.vide": "Ce champ ne peut pas être vide.",
+    "app.formulaire.messageErreur.nom.identique": "Le nom doit être différent du prénom.",
+    "app.formulaire.messageErreur.prenom.identique": "Le prénom doit être différent du nom.",
+
+    "app.formulaire.messageErreur.classe": "Vous devez sélectionner une classe.",
+
+    "app.formulaire.messageErreur.niveau.insuffisant": "Le niveau doit être supérieur à 0.",
+    "app.formulaire.messageErreur.niveau.sureleve": "Le niveau doit être inférieur à 20.",
+
+    "app.formulaire.messageErreur.pointsDeVie.insuffisant": "Les points de vie doivent être supérieur à 0.",
+    "app.formulaire.messageErreur.pointsDeVie.sureleve": "Les points de vie doivent être inférieur à 50.",
+
+    "app.formulaire.messageErreur.caracteristique.force.insuffisant": "La force doit être supérieure à 0.",
+    "app.formulaire.messageErreur.caracteristique.force.sureleve": "La force doit être inférieure à 20.",
+
+    "app.formulaire.messageErreur.caracteristique.dexterite.insuffisant": "La dextérité doit être supérieure à 0.",
+    "app.formulaire.messageErreur.caracteristique.dexterite.sureleve": "La dextérité doit être inférieure à 20.",
+
+    "app.formulaire.messageErreur.caracteristique.sagesse.insuffisant": "La sagesse doit être supérieure à 0.",
+    "app.formulaire.messageErreur.caracteristique.sagesse.sureleve": "La sagesse doit être inférieure à 20.",
+
+    "app.formulaire.messageErreur.caracteristique.intelligence.insuffisant": "L'intelligence doit être supérieure à 0.",
+    "app.formulaire.messageErreur.caracteristique.intelligence.sureleve": "L'intelligence doit être inférieure à 20.",
+
+    "app.formulaire.messageErreur.caracteristique.charisme.insuffisant": "Le charisme doit être supérieure à 0.",
+    "app.formulaire.messageErreur.caracteristique.charisme.sureleve": "Le charisme doit être inférieure à 20.",
+
+    "app.formulaire.messageErreur.tableau.vide": "Vous devez avoir au moins un élément.",
+    "app.formulaire.messageErreur.tableau.valeurvide": "Vous ne pouvez avoir d'emplacement vide.",
+    "app.formulaire.messageErreur.tableau.surremplis": "Vous avez trop d'éléments.",
+
+    "app.chargement": "Chargement..."
+}
