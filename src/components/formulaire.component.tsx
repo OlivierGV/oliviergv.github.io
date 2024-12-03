@@ -4,6 +4,7 @@ import axios from "axios";
 import { IPersonnage } from "./personnage.component";
 import { useNavigate } from "react-router-dom";
 import { FormattedMessage, useIntl } from "react-intl";
+import DonneesPersistantes from "../util/DonneesPersistantes";
 
 interface FormulaireProp {
   id?: string;
@@ -49,7 +50,12 @@ export const Formulaire = (props: FormulaireProp) => {
       if (props.mode === "edition") {
         setChargementEnCours(true);
         const res = await axios.get(
-          `https://api-v3-grul.onrender.com/personnages/${props.id}`
+          `https://api-v3-grul.onrender.com/personnages/${props.id}`, {
+            headers: {
+              'Authorization': `Bearer ${DonneesPersistantes.getToken()}`,
+              'Accept': 'application/json',
+            }
+          }
         );
         setPersonnage(res.data.personnage);
         setChargementEnCours(false);
@@ -96,12 +102,22 @@ export const Formulaire = (props: FormulaireProp) => {
             _id: props.id,
           },
         };
-        await axios.put(`https://api-v3-grul.onrender.com/personnages/`, updatedPersonnageData);
+        await axios.put(`https://api-v3-grul.onrender.com/personnages/`, updatedPersonnageData, {
+          headers: {
+            'Authorization': `Bearer ${DonneesPersistantes.getToken()}`,
+            'Accept': 'application/json'
+          }
+        });
         naviguer("/")
         /** Mettre les données à jour */
         window.location.reload()
       } else if (props.mode === "ajout") {
-        const reponse = await axios.post(`https://api-v3-grul.onrender.com/personnages/`, personnageData);
+        const reponse = await axios.post(`https://api-v3-grul.onrender.com/personnages/`, personnageData, {
+          headers: {
+            'Authorization': `Bearer ${DonneesPersistantes.getToken()}`,
+            'Accept': 'application/json'
+          }
+        });
         if(reponse.status == 201){
           viderFormulaire()
         }

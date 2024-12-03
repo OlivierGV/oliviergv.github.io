@@ -15,8 +15,12 @@ import {
 /** Code pour la redirection proposée par ChatGPT (naviguer) */
 const supprimerPersonnage = ( id : string, callback: () => void ) => {
     // Cette façon de faire pour passer un paramètre dans l'URL est proposé par axios : https://apidog.com/blog/params-axios-get-request/
-    const apiUrl = `https://api-v3-grul.onrender.com/personnages/${id}`
-    axios.delete(apiUrl)
+    axios.delete(`https://api-v3-grul.onrender.com/personnages/${id}`, {
+        headers: {
+            'Authorization': `Bearer ${DonneesPersistantes.getToken()}`, 
+            'Accept': 'application/json'
+        }
+    })
     .then(() => {
         callback()
     })

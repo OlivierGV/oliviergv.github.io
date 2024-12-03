@@ -21,8 +21,14 @@ export const Authentification = () => {
                 "https://api-v3-grul.onrender.com/generatetoken",
                 {
                     userlogin: {
-                        email: email,
-                        password: motDePasse
+                      email: email,
+                      password: motDePasse
+                    }
+              },
+                {
+                    headers: {
+                      'Authorization': `Bearer ${DonneesPersistantes.getToken()}`,
+                      'Accept': 'application/json',
                     }
                 }
             );

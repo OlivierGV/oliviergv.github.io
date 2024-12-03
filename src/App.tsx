@@ -16,11 +16,12 @@ import { LangueContext } from './contexts/langue.context';
 
 // Router
 import {
-  BrowserRouter,
+  HashRouter,
   Routes,
   Route,
   Outlet,
-  useParams
+  useParams,
+  Link
 } from 'react-router-dom';
 
 // Composants
@@ -50,9 +51,9 @@ function Modele() {
           <BoutonDeconnexion />
         </Box>
         <Stack direction="row" spacing={5} justifyContent="center">
-          <a href="/"><FormattedMessage id="app.chemin.personnages" /></a>
-          <a href="/formulaire-ajout"><FormattedMessage id="app.chemin.ajouter" /></a>
-          <a href="https://api-v3-grul.onrender.com/api-docs/"><FormattedMessage id="app.chemin.documentation" /></a>
+          <Link to="/"><FormattedMessage id="app.chemin.personnages" /></Link>
+          <Link to="/formulaire-ajout"><FormattedMessage id="app.chemin.ajouter" /></Link>
+          <Link to="https://api-v3-grul.onrender.com/api-docs/"><FormattedMessage id="app.chemin.documentation" /></Link>
         </Stack>
         </div>
       )}
@@ -166,7 +167,12 @@ function App() {
    */
   const chercherParDate = () => {
     axios
-      .get('https://api-v3-grul.onrender.com/personnages/date/' + (triDate ? 'desc' : 'asc'))
+      .get('https://api-v3-grul.onrender.com/personnages/date/' + (triDate ? 'desc' : 'asc'), {
+        headers: {
+          'Authorization': `Bearer ${DonneesPersistantes.getToken()}`, 
+          'Accept': 'application/json'
+        }
+      })
       .then((res) => {
         const nouveauxPersonnages = res.data;
         const sontIdentiques = _.isEqual(nouveauxPersonnages, personnages);
@@ -185,7 +191,12 @@ function App() {
    */
   const chercherParNiveau = () => {
     axios
-      .get('https://api-v3-grul.onrender.com/personnages/niveau/' + (triNiveau ? 'desc' : 'asc'))
+      .get('https://api-v3-grul.onrender.com/personnages/niveau/' + (triNiveau ? 'desc' : 'asc'), {
+        headers: {
+          'Authorization': `Bearer ${DonneesPersistantes.getToken()}`, 
+          'Accept': 'application/json'
+        }
+      })
       .then((res) => {
         const nouveauxPersonnages = res.data;
         const sontIdentiques = _.isEqual(nouveauxPersonnages, personnages);
@@ -217,7 +228,7 @@ function App() {
 
   return (
       <IntlProvider locale={langue} messages={message}>
-        <BrowserRouter>
+        <HashRouter>
           <Routes>
             <Route path="/" element={<Modele />}>
               <Route
@@ -245,12 +256,9 @@ function App() {
             <Route path="/formulaire-edition/:id" element={<Modele />}>
               <Route index element={<PageFormulaireEdition />} />
             </Route>
-  
-            <Route path="/triage-niveau/:niveau" element={<Modele />}>
-              <Route index element={<PageFormulaireEdition />} />
-            </Route>
+
           </Routes>
-        </BrowserRouter>
+        </HashRouter>
       </IntlProvider>
   );
 }
