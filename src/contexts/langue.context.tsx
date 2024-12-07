@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Francais from '../lang/fr.json';
 import Anglais from '../lang/en.json';
 
+// mon modèle
 export type LangueContextType = {
   langue: string;
   setLangue: (nouvelleLangue: string) => void;
@@ -9,6 +10,7 @@ export type LangueContextType = {
   setMessage: (typeMessage: any) => void;
 };
 
+// par défaut
 export const LangueContext = React.createContext<LangueContextType>({
   langue: 'fr',
   setLangue: () => {},
@@ -16,6 +18,7 @@ export const LangueContext = React.createContext<LangueContextType>({
   setMessage: () => {},
 });
 
+// les vérif
 export const LangueProvider = (props: any) => {
   const [langue, setLangue] = useState('fr');
   const [message, setMessage] = useState(langue === 'fr' ? Francais : Anglais);

@@ -19,9 +19,17 @@ export function LangueSelect() {
 
   };
 
+  // jouer avec les cookies
   useEffect(() => {
-    console.log(langue)
-  }, [langue])
+    const storedLangue = localStorage.getItem('language') || 'fr';
+    setLangue(storedLangue);
+
+    if (storedLangue === "fr") {
+      setMessage(Francais);
+    } else if (storedLangue === "en") {
+      setMessage(Anglais);
+    }
+  }, [setLangue, setMessage]);
 
   return (
     <div>

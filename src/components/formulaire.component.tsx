@@ -1,23 +1,34 @@
 import { useEffect, useState } from "react";
-import { TextField, FormControl, MenuItem, Button } from "@mui/material";
+import { TextField, FormControl, MenuItem, Button, DialogTitle, Dialog, DialogActions } from "@mui/material";
 import axios from "axios";
 import { IPersonnage } from "./personnage.component";
 import { useNavigate } from "react-router-dom";
 import { FormattedMessage, useIntl } from "react-intl";
 import DonneesPersistantes from "../util/DonneesPersistantes";
 
+/** Paramètres d'un formulaire */
 interface FormulaireProp {
+  mode: 'ajout' | 'edition';
+  // Pour l'édition
   id?: string;
-  mode: string;
 }
 
+/** Le formulaire */
 export const Formulaire = (props: FormulaireProp) => {
+  // pop up
+  const [confirmation, setConfirmation] = useState(false);
+  // données
   const [personnage, setPersonnage] = useState<IPersonnage | null>(null);
+  // affichage d'un chargement
   const [chargementEnCours, setChargementEnCours] = useState(true);
+
+  // vérifier si le form est valide avant de soumettre
   const [formulaireValide, setFormulaireValide] = useState(true); 
 
+  // retour à l'accueil après une édition
   const naviguer = useNavigate();
 
+  // boîte de sélection
   const classes = [
     { value: "Nain", label: <FormattedMessage id="app.formulaire.classe.nain" /> },
     { value: "Elf", label: <FormattedMessage id="app.formulaire.classe.elf" /> },
@@ -25,9 +36,10 @@ export const Formulaire = (props: FormulaireProp) => {
     { value: "Orc", label: <FormattedMessage id="app.formulaire.classe.orc" /> },
   ];
 
-  // Champs du formulaire
+  // traduction
   const { formatMessage } = useIntl();
 
+  // champs du formulaire
   const [prenom, setPrenom] = useState("");
   const [nom, setNom] = useState("");
   const [classe, setClasse] = useState("Nain");
@@ -42,8 +54,10 @@ export const Formulaire = (props: FormulaireProp) => {
   const [competences, setCompetences] = useState<string[]>([]);
   const [capacites, setCapacites] = useState<string[]>([]);
   const [equipement, setEquipement] = useState<string[]>([]);
+  // ISOString correspond au format que j'ai choisi pour une date. 
   const [dateDeCreation, setDateDeCreation] = useState(new Date().toISOString());
 
+  // pré-remplir les champs si en mode édition
   const chercherPersonnage = async () => {
     try {
       setChargementEnCours(true);
@@ -68,6 +82,7 @@ export const Formulaire = (props: FormulaireProp) => {
     }
   };
 
+  // apporter des modifications à la base de données après la soumission
   const modifierPersonnage = async () => {
     let personnageData = {
       personnage: {
@@ -94,7 +109,7 @@ export const Formulaire = (props: FormulaireProp) => {
     };
     try {
       if (props.mode === "edition") {
-        console.log("pp");
+        // code généré par ChatGPT pour récupérer un objet et lui ajouter un champ au lieu de devoir ré-écrire le code à la main
         const updatedPersonnageData = {
           ...personnageData,
           Personnage: {
@@ -102,15 +117,13 @@ export const Formulaire = (props: FormulaireProp) => {
             _id: props.id,
           },
         };
+        // fin du code généré
         await axios.put(`https://api-v3-grul.onrender.com/personnages/`, updatedPersonnageData, {
           headers: {
             'Authorization': `Bearer ${DonneesPersistantes.getToken()}`,
             'Accept': 'application/json'
           }
         });
-        naviguer("/")
-        /** Mettre les données à jour */
-        window.location.reload()
       } else if (props.mode === "ajout") {
         const reponse = await axios.post(`https://api-v3-grul.onrender.com/personnages/`, personnageData, {
           headers: {
@@ -122,12 +135,13 @@ export const Formulaire = (props: FormulaireProp) => {
           viderFormulaire()
         }
       }
+      setConfirmation(true)
     } catch (err) {
       console.error(err);
     }
   };
 
-  /** Vider le formulaire après la soumission */
+  // vider le formulaire après la soumission
   const viderFormulaire = () => {
     setPrenom("");
     setNom("");
@@ -146,7 +160,7 @@ export const Formulaire = (props: FormulaireProp) => {
     setDateDeCreation(new Date().toISOString());
   };
 
-  /** Remplir un personnage avec les éléments du formulaire */
+  // Remplir un personnage avec les éléments du formulaire
   const remplirPersonnage = () => {
     if (personnage != null) {
       setPrenom(personnage.nomComplet.prenom);
@@ -167,19 +181,22 @@ export const Formulaire = (props: FormulaireProp) => {
     }
   };
 
+  // au début du formulaire..
   useEffect(() => {
     chercherPersonnage();
-  }, [props.mode, props.id]);
+  }, []);
 
+  // remplir le formulaire 
   useEffect(() => {
     if (!chargementEnCours && personnage) {
       remplirPersonnage();
     }
-  }, [personnage, chargementEnCours]);
+  }, [chargementEnCours]);
 
-  /** Code pour valider la validité du formulaire */
+  // valider la validité du formulaire
   useEffect(() => {
-    const isValid =
+    // si une fonction retourne un message d'erreur, ça retourne faux
+    const estValide =
       gestionNomPrenom("prénom") === "" &&
       gestionNomPrenom("nom") === "" &&
       gestionClasse() === "" &&
@@ -194,7 +211,7 @@ export const Formulaire = (props: FormulaireProp) => {
       verifierChamp(capacites) === "" &&
       verifierChamp(equipement) === "";
 
-      setFormulaireValide(isValid);
+      setFormulaireValide(estValide);
   }, [
     prenom,
     nom,
@@ -211,10 +228,12 @@ export const Formulaire = (props: FormulaireProp) => {
     equipement,
   ]);
 
+  // afficher un message pour l'attente
   if (chargementEnCours) {
-    return <div>chargementEnCours...</div>;
+    return <FormattedMessage id="app.chargement"/>;
   }
 
+  // vérification pour le champ nom et prénom
   function gestionNomPrenom(texte: string) {
     if (texte === "nom") {
       if (nom.length === 0) {
@@ -232,6 +251,7 @@ export const Formulaire = (props: FormulaireProp) => {
     return "";
   }
 
+  // vérification pour la classe
   function gestionClasse() {
     if (classe.length === 0) {
       return <FormattedMessage id="app.formulaire.messageErreur.classe" />;
@@ -239,6 +259,7 @@ export const Formulaire = (props: FormulaireProp) => {
     return "";
   }
 
+  // vérification pour le niveau
   function gestionNiveau() {
     if (niveau <= 0) {
       return <FormattedMessage id="app.formulaire.messageErreur.niveau.insuffisant" />;
@@ -248,6 +269,7 @@ export const Formulaire = (props: FormulaireProp) => {
     return "";
   }
 
+  // vérification pour les points de vie
   function gestionVie() {
     if (pointsDeVie <= 0) {
       return <FormattedMessage id="app.formulaire.messageErreur.pointsDeVie.insuffisant" />;
@@ -257,6 +279,7 @@ export const Formulaire = (props: FormulaireProp) => {
     return "";
   }
 
+  // vérification pour les caractéristiques
   function gestionCaracteristique(caracteristique: string) {
     switch (caracteristique) {
       case "force":
@@ -298,6 +321,7 @@ export const Formulaire = (props: FormulaireProp) => {
     return "";
   }
 
+  // vérification pour les champs qui demandent une syntaxe comme "mon, petit, inventaire"
   function verifierChamp(tableauString: string[]) {
     if (tableauString.length === 0) {
       return <FormattedMessage id="app.formulaire.messageErreur.tableau.vide" />;
@@ -313,6 +337,7 @@ export const Formulaire = (props: FormulaireProp) => {
     return "";
   }
 
+  // ce qu'on affiche
   return (
     <form>
       <FormControl fullWidth>
@@ -492,6 +517,25 @@ export const Formulaire = (props: FormulaireProp) => {
             setEquipement(mots);
           }}
         />
+        <br />
+        <Dialog open={confirmation}>
+        <DialogTitle><FormattedMessage id="app.confirmation"/></DialogTitle>
+        <DialogActions>
+          <Button onClick={() => {
+            // L'utilisation d'un setPersonnages pour activer le useEffect ajoute des lignes de code supplémentaire,
+            //  je trouvais donc ça pertinent de plutôt utiliser un window.location.reload pour sauver de l'espace et
+            //  simplifier la tâche.
+            if(props.mode == "edition"){
+              naviguer("/")
+              window.location.reload()
+            } else if (props.mode == "ajout"){
+              window.location.reload()
+            }
+            }} color="primary">
+          <FormattedMessage id="app.tri.confirmation"/>
+          </Button>
+        </DialogActions>
+      </Dialog>
         <br />
         <Button
           variant="contained"

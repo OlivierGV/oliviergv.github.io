@@ -1,6 +1,5 @@
 import axios from 'axios';
 import EditIcon from '@mui/icons-material/Edit';
-import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Box, Button } from '@mui/material';
@@ -10,11 +9,9 @@ import {
     FormattedMessage,
   } from 'react-intl'
 
-/// supprimer un personnage
-/// ID : Le personnage
-/** Code pour la redirection proposée par ChatGPT (naviguer) */
+// supprimer un personnage
 const supprimerPersonnage = ( id : string, callback: () => void ) => {
-    // Cette façon de faire pour passer un paramètre dans l'URL est proposé par axios : https://apidog.com/blog/params-axios-get-request/
+    // cette façon de faire pour passer un paramètre dans l'URL est proposé par axios : https://apidog.com/blog/params-axios-get-request/
     axios.delete(`https://api-v3-grul.onrender.com/personnages/${id}`, {
         headers: {
             'Authorization': `Bearer ${DonneesPersistantes.getToken()}`, 
@@ -22,6 +19,7 @@ const supprimerPersonnage = ( id : string, callback: () => void ) => {
         }
     })
     .then(() => {
+        // met à jour la liste des personnages en enlevant celui qui a été supprimé
         callback()
     })
     .catch(err => {
@@ -29,9 +27,7 @@ const supprimerPersonnage = ( id : string, callback: () => void ) => {
     })
 }
 
-/// Afficher un formulaire
-/// ID : Le personnage
-/// MODIF : Si on doit pré-remplir le formulaire (True -> Oui, False -> Non)
+// Afficher un formulaire
 const afficherFormulaire = (modification: boolean, naviguer: ReturnType<typeof useNavigate>, id?: string) => {
     if (modification) {
         // Rediriger vers la page d'édition du personnage
@@ -42,11 +38,12 @@ const afficherFormulaire = (modification: boolean, naviguer: ReturnType<typeof u
     }
 }
 
-/// PARAM
+// paramètres d'un bouton
 interface BoutonProp {
     id? : string;
 }
 
+// paramètre d'un bouton de suppression
 interface BoutonSuppressionProps extends BoutonProp {
     rafraichirPersonnages: () => void; 
 }
@@ -66,16 +63,6 @@ export const BoutonModification = (prop : BoutonProp) => {
     return (
         <Button onClick={() => afficherFormulaire(true, naviguer, prop.id!)}>
             <EditIcon/>
-        </Button>
-    )
-}
-
-// afficher un bouton d'addition
-export const BoutonAddition = () => {
-    const naviguer = useNavigate();
-    return (
-        <Button onClick={() => afficherFormulaire(false, naviguer)}>
-            <AddIcon/>
         </Button>
     )
 }

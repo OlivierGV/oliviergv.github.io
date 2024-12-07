@@ -1,10 +1,8 @@
 import axios from 'axios';
 import './App.css';
-import React, { useEffect, useState, useContext } from 'react';
-import { Stack, Box, Typography } from '@mui/material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { Formulaire } from './components/formulaire.component';
-import { PopUpTriDate, PopUpTriNiveau } from './components/popup.component';
+import { useEffect, useState, useContext } from 'react';
+import { Stack, Box } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import _ from 'lodash';
 
 //traduction
@@ -20,17 +18,15 @@ import {
   Routes,
   Route,
   Outlet,
-  useParams,
   Link
 } from 'react-router-dom';
 
 // Composants
-import Personnage, { IPersonnage } from './components/personnage.component';
-import { Grid } from '@mui/material';
-import { Authentification } from './components/connexion.component';
+import { IPersonnage } from './components/personnage.component';
 import DonneesPersistantes from './util/DonneesPersistantes';
 import { BoutonDeconnexion } from './components/bouton.component';
 import { LangueSelect } from './components/selection.component';
+import { PageConnexion, PageFormulaireAjout, PageFormulaireEdition, PagePrincipale } from './components/page.component';
 
 // Emprunté depuis : https://mui.com/material-ui/customization/dark-mode/
 export const darkTheme = createTheme({
@@ -44,6 +40,11 @@ function Modele() {
 
   return (
     <div>
+      {!token && (
+        <Box display="flex" justifyContent="center" alignItems="center" padding={1}>
+          <LangueSelect />
+        </Box>
+      )}
       {token && (
         <div>
         <Box display="flex" justifyContent="space-between" alignItems="center" padding={1}>
@@ -63,72 +64,6 @@ function Modele() {
   );
 }
 
-
-/// Afficher les personnages
-/** J'ai demandé à ChatGPT de modifier ma fonction pour m'aider à appeler setPersonnages dans mon Pop Up */
-interface PagePrincipaleProps {
-  personnages: IPersonnage[]
-  setTriActif: React.Dispatch<React.SetStateAction<string>>
-  setTriDateCroissant: React.Dispatch<React.SetStateAction<boolean>>
-  setTriNiveauCroissant: React.Dispatch<React.SetStateAction<boolean>>
-  chercherPersonnages: () => void
-}
-
-function PageConnexion() {
-  return (
-    <ThemeProvider theme={darkTheme}>
-      <Authentification/>
-    </ThemeProvider>
-  );
-}
-
-function PagePrincipale({ personnages, setTriActif, setTriDateCroissant, chercherPersonnages, setTriNiveauCroissant} : PagePrincipaleProps) {
-  return (
-    <ThemeProvider theme={darkTheme}>
-      <Box sx={{ m: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
-        <PopUpTriDate setTriActif={setTriActif} setTriDateCroissant={setTriDateCroissant} />
-        <PopUpTriNiveau setTriActif={setTriActif} setTriNiveauCroissant={setTriNiveauCroissant} />
-      </Box>
-      <br />
-      <Grid
-        container
-        spacing={5}
-        direction="column"
-        alignItems="center"
-        style={{ minHeight: '100vh' }}  
-      >
-        {personnages != undefined && personnages != null ? (
-          personnages.map((personnage) => (
-            <Grid item xs={8} key={personnage._id}>
-              <Personnage personnage={personnage} rafraichirPersonnages={chercherPersonnages} />
-            </Grid>
-          ))
-        ) : (
-          <Typography>Rien à afficher.</Typography>
-        )}
-      </Grid>
-    </ThemeProvider>
-  );
-}
-
-function PageFormulaireAjout() {
-  return (
-    <ThemeProvider theme={darkTheme}>
-      <Formulaire mode={'ajout'} />
-    </ThemeProvider>
-  );
-}
-
-const PageFormulaireEdition = () => {
-  const { id } = useParams<{ id: string }>()
-
-  return (
-    <ThemeProvider theme={darkTheme}>
-      <Formulaire id={id} mode={'edition'} />
-    </ThemeProvider>
-  );
-}
-
 function App() {
   const { langue, message } = useContext(LangueContext);
 
@@ -141,26 +76,40 @@ function App() {
    * Chercher les personnages
    */
   const chercherPersonnages = () => {
-    setTriActif("")
-    axios
-      .get('https://api-v3-grul.onrender.com/personnages', {
-        headers: {
-          'Authorization': `Bearer ${DonneesPersistantes.getToken()}`, 
-          'Accept': 'application/json'
+  setTriActif("");
+  console.log("Token utilisé : " + DonneesPersistantes.getToken());
+
+  axios
+    .get('https://api-v3-grul.onrender.com/personnages', {
+      headers: {
+        'Authorization': `Bearer ${DonneesPersistantes.getToken()}`,
+        'Accept': 'application/json',
+      },
+    })
+    .then((res) => {
+      const nouveauxPersonnages = res.data.personnages;
+      const sontIdentiques = _.isEqual(nouveauxPersonnages, personnages);
+      console.warn(sontIdentiques);
+      if (!sontIdentiques) {
+        setPersonnages(nouveauxPersonnages);
+      }
+    })
+    .catch((err) => {
+      console.log("Erreur lors de la requête : ", err);
+      if (err.response) {
+        console.log("Code d'erreur HTTP : ", err.response.status);
+        console.log("Détails de l'erreur : ", err.response.data);
+        if (err.response.status === 403) {
+          console.log("Erreur 403 : Accès interdit. Vérifiez votre token ou vos permissions.");
         }
-      })
-      .then((res) => {
-        const nouveauxPersonnages = res.data.personnages;
-        const sontIdentiques = _.isEqual(nouveauxPersonnages, personnages);
-        console.warn(sontIdentiques)
-        if(!sontIdentiques){
-          setPersonnages(nouveauxPersonnages)
-        }
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
+      } else if (err.request) {
+        console.log("Pas de réponse du serveur : ", err.request);
+      } else {
+        console.log("Erreur lors de la demande : ", err.message);
+      }
+    });
+};
+
 
   /**
    * Chercher les personnages et les trier par date
@@ -212,7 +161,6 @@ function App() {
 
   // Afficher les personnages au démarrage et mettre l'affichage à jour lorsque le tri change.
   useEffect(() => {
-    console.log(DonneesPersistantes.getToken());
     if(!triActif){
       chercherPersonnages()
     } else if (triActif){
@@ -227,6 +175,7 @@ function App() {
   }, [triActif, triDate, triNiveau]);
 
   return (
+    <ThemeProvider theme={darkTheme}>
       <IntlProvider locale={langue} messages={message}>
         <HashRouter>
           <Routes>
@@ -260,6 +209,7 @@ function App() {
           </Routes>
         </HashRouter>
       </IntlProvider>
+    </ThemeProvider>
   );
 }
 

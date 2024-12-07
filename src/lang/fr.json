@@ -1,9 +1,13 @@
 {
+    "app.courriel": "Adresse courriel",
+    "app.motdepasse": "Mot de passe",
     "app.affichage": "Rien à afficher.",
     "app.connexion.titre": "Connexion",
     "app.connexion.soumettre": "Se connecter",
     "app.formulaire.champ.vide": "Champ obligatoire.",
-    "app.formulaire.email.invalide": "Email invalide : format",
+    "app.formulaire.email.invalide": "Adresse courriel invalide : format",
+    "app.formulaire.mdp.invalide": "Mot de passe invalide",
+    "app.formulaire.invalide": "Adresse courriel ou mot de passe invalide.",
 
     "app.chemin.personnages": "Mes personnages",
     "app.chemin.ajouter": "Ajouter un personnage",
@@ -22,6 +26,9 @@
 
     "app.tri.annuler": "Annuler",
     "app.tri.confirmer": "Soumettre",
+    "app.tri.confirmation": "J'ai compris",
+
+    "app.confirmation": "Le formulaire a été soumis avec succès.",
 
     "app.formulaire.ajout.defaut": "À remplir...",
     "app.formulaire.ajout.tableau.defaut": "Veuillez, écrire, comme, ceci",

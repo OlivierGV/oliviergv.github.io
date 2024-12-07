@@ -1,9 +1,13 @@
 {
+    "app.courriel": "Email",
+    "app.motdepasse": "Password",
     "app.affichage": "Nothing to display.",
     "app.connexion.titre": "Login",
     "app.connexion.soumettre": "Log in",
     "app.formulaire.champ.vide": "This field is required.",
     "app.formulaire.email.invalide": "Invalid email: incorrect format",
+    "app.formulaire.mdp.invalide": "Invalid password",
+    "app.formulaire.invalide": "Invalide email or password.",
 
     "app.chemin.personnages": "My characters",
     "app.chemin.ajouter": "Add a character",
@@ -22,6 +26,9 @@
 
     "app.tri.annuler": "Cancel",
     "app.tri.confirmer": "Submit",
+    "app.tri.confirmation": "OK",
+    
+    "app.confirmation": "Form submitted successfully.",
 
     "app.formulaire.ajout.defaut": "To be filled...",
     "app.formulaire.ajout.tableau.defaut": "Please, write, like, this",
