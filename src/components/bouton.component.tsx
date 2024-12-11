@@ -11,7 +11,7 @@ import {
 
 // supprimer un personnage
 const supprimerPersonnage = ( id : string, callback: () => void ) => {
-    // cette façon de faire pour passer un paramètre dans l'URL est proposé par axios : https://apidog.com/blog/params-axios-get-request/
+    // Code emprunté et modifié de la documentation de Axios https://apidog.com/blog/params-axios-get-request/
     axios.delete(`https://api-v3-grul.onrender.com/personnages/${id}`, {
         headers: {
             'Authorization': `Bearer ${DonneesPersistantes.getToken()}`, 
@@ -25,6 +25,7 @@ const supprimerPersonnage = ( id : string, callback: () => void ) => {
     .catch(err => {
         console.log(err);
     })
+    // Fin du code emprunté et modifié
 }
 
 // Afficher un formulaire

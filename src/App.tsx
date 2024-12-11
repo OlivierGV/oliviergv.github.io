@@ -35,17 +35,21 @@ export const darkTheme = createTheme({
   },
 });
 
+// Code emprunté et modifié depuis le site du cours : https://web3.profinfo.ca/react3/#exemple-de-spa-avec-router
 function Modele() {
   const token = DonneesPersistantes.getToken();
 
   return (
     <div>
-      {!token && (
+      { //si pas token, afficher que la boîte de langues
+      !token && (
         <Box display="flex" justifyContent="center" alignItems="center" padding={1}>
           <LangueSelect />
         </Box>
       )}
-      {token && (
+      
+      { //si token, afficher les routes}
+      token && (
         <div>
         <Box display="flex" justifyContent="space-between" alignItems="center" padding={1}>
           <LangueSelect />
@@ -79,16 +83,20 @@ function App() {
   setTriActif("");
   console.log("Token utilisé : " + DonneesPersistantes.getToken());
 
+  // code emprunté de LogRocket pour indiquer des headers particuliers : https://blog.logrocket.com/using-axios-set-request-headers/
   axios
     .get('https://api-v3-grul.onrender.com/personnages', {
       headers: {
         'Authorization': `Bearer ${DonneesPersistantes.getToken()}`,
         'Accept': 'application/json',
       },
+      // fin du code emprunté
     })
     .then((res) => {
       const nouveauxPersonnages = res.data.personnages;
+      // J'ai demandé à chatgpt de m'aider à comparer deux tableaux
       const sontIdentiques = _.isEqual(nouveauxPersonnages, personnages);
+      // Fin du code emprunté
       console.warn(sontIdentiques);
       if (!sontIdentiques) {
         setPersonnages(nouveauxPersonnages);
@@ -96,17 +104,6 @@ function App() {
     })
     .catch((err) => {
       console.log("Erreur lors de la requête : ", err);
-      if (err.response) {
-        console.log("Code d'erreur HTTP : ", err.response.status);
-        console.log("Détails de l'erreur : ", err.response.data);
-        if (err.response.status === 403) {
-          console.log("Erreur 403 : Accès interdit. Vérifiez votre token ou vos permissions.");
-        }
-      } else if (err.request) {
-        console.log("Pas de réponse du serveur : ", err.request);
-      } else {
-        console.log("Erreur lors de la demande : ", err.message);
-      }
     });
 };
 
@@ -115,6 +112,7 @@ function App() {
    * Chercher les personnages et les trier par date
    */
   const chercherParDate = () => {
+    // code emprunté de LogRocket pour indiquer des headers particuliers : https://blog.logrocket.com/using-axios-set-request-headers/
     axios
       .get('https://api-v3-grul.onrender.com/personnages/date/' + (triDate ? 'desc' : 'asc'), {
         headers: {
@@ -122,10 +120,12 @@ function App() {
           'Accept': 'application/json'
         }
       })
+      // fin du code emprunté
       .then((res) => {
         const nouveauxPersonnages = res.data;
+        // J'ai demandé à chatgpt de m'aider à comparer deux tableaux
         const sontIdentiques = _.isEqual(nouveauxPersonnages, personnages);
-        console.warn(sontIdentiques)
+        // fin du code emprunté
         if(!sontIdentiques){
           setPersonnages(nouveauxPersonnages)
         }
@@ -139,6 +139,7 @@ function App() {
    * Chercher les personnages et les trier par niveau
    */
   const chercherParNiveau = () => {
+    // code emprunté de LogRocket pour indiquer des headers particuliers : https://blog.logrocket.com/using-axios-set-request-headers/
     axios
       .get('https://api-v3-grul.onrender.com/personnages/niveau/' + (triNiveau ? 'desc' : 'asc'), {
         headers: {
@@ -146,9 +147,12 @@ function App() {
           'Accept': 'application/json'
         }
       })
+      // fin du code emprunté
       .then((res) => {
         const nouveauxPersonnages = res.data;
+        // J'ai demandé à chatgpt de m'aider à comparer deux tableaux
         const sontIdentiques = _.isEqual(nouveauxPersonnages, personnages);
+        // fin du code emprunté
         console.warn(sontIdentiques)
         if(!sontIdentiques){
           setPersonnages(nouveauxPersonnages)
@@ -174,9 +178,11 @@ function App() {
     }
   }, [triActif, triDate, triNiveau]);
 
+  // Code emprunté et modifié depuis le site du cours : https://web3.profinfo.ca/react3/#routes-imbriquees
   return (
     <ThemeProvider theme={darkTheme}>
       <IntlProvider locale={langue} messages={message}>
+        { /* Problème avec BrowserRoute, j'ai donc suivi les recommandations suivantes : https://stackoverflow.com/questions/71984401/react-router-not-working-with-github-pages */ }
         <HashRouter>
           <Routes>
             <Route path="/" element={<Modele />}>
@@ -212,5 +218,6 @@ function App() {
     </ThemeProvider>
   );
 }
+// Fin du code emprunté et modifié
 
 export default App;

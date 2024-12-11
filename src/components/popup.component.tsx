@@ -29,9 +29,11 @@ export const PopUpTriDate: React.FC<PopUpTriDateProps> = ({ setTriActif, setTriD
         <Button variant="contained" color="primary" onClick={() => setEstOuvert(true)}>
             <FormattedMessage id="app.tri.date"/>
         </Button>
-
+        
+        { /* Documentation Dialog : https://mui.com/material-ui/react-dialog/ */}
         <Dialog open={estOuvert} onClose={() => setEstOuvert(false)}>
             <DialogTitle><FormattedMessage id="app.tri.titre"/></DialogTitle>
+                { /* Peut-être utiliser un DialogContent si j'ai le temps */ }
                 <Box sx={{ display: 'flex' }}>
                     <Button onClick={() => setTemp(true)} 
                         color="primary" 
@@ -43,7 +45,7 @@ export const PopUpTriDate: React.FC<PopUpTriDateProps> = ({ setTriActif, setTriD
                         color="primary" 
                         variant={ !temp ? "contained" : "outlined" }
                     >
-                        <FormattedMessage id="app.tri.date.desc"/>
+                    <FormattedMessage id="app.tri.date.desc"/>
                     </Button>
                 </Box>
             <DialogActions>
@@ -77,6 +79,7 @@ export const PopUpTriNiveau: React.FC<PopUpTriNiveauProps> = ({ setTriActif, set
             <FormattedMessage id="app.tri.niveau"/>
         </Button>
 
+        { /* Mêmes commentaires que dans le PopUp précédent */ }
         <Dialog open={estOuvert} onClose={() => setEstOuvert(false)}>
             <DialogTitle><FormattedMessage id="app.tri.titre"/></DialogTitle>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>

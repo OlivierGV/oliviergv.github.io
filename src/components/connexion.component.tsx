@@ -48,7 +48,8 @@ export const Authentification = () => {
 
     // vérifier l'adresse courriel
     function gestionEmail() {
-        const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        // Regex emprunté de Regexr : https://regexr.com/3e48o
+        const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
         if (email.length <= 0) {
             return <FormattedMessage id="app.formulaire.champ.vide"/>
         } else if (email.length > 255 || !regex.test(email)) {

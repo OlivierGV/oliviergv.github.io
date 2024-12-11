@@ -8,7 +8,7 @@ import { PopUpTriDate, PopUpTriNiveau } from "./popup.component"
 import { Authentification } from "./connexion.component"
 import { FormattedMessage } from "react-intl"
 
-/** J'ai demandé à ChatGPT de modifier ma fonction pour m'aider à appeler setPersonnages dans mon Pop Up */
+// rappel : mettre la souris sur la fonction à appeler pour connaître le type
 export interface PagePrincipaleProps {
     personnages: IPersonnage[]
     setTriActif: React.Dispatch<React.SetStateAction<string>>
@@ -28,6 +28,7 @@ export function PageConnexion() {
 export function PagePrincipale({ personnages, setTriActif, setTriDateCroissant, chercherPersonnages, setTriNiveauCroissant} : PagePrincipaleProps) {
     return (
       <>
+      { /* Customisation des "Box" et "Grid" par ChatGPT pour centrer mes choses */}
         <Box sx={{ m: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
           <PopUpTriDate setTriActif={setTriActif} setTriDateCroissant={setTriDateCroissant} />
           <PopUpTriNiveau setTriActif={setTriActif} setTriNiveauCroissant={setTriNiveauCroissant} />

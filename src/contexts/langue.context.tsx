@@ -2,6 +2,14 @@ import React, { useEffect, useState } from 'react';
 import Francais from '../lang/fr.json';
 import Anglais from '../lang/en.json';
 
+/**
+ * À noter :
+ * J'avais demandé à Florence de me passer son code pour le LangueContext dans un exercice précédent.
+ * J'ai réutiliser et modifier son code ici pour garder la langue en mémoire entre les pages.
+ * 
+ * Je n'aurais pas été capable de coder ceci sans son aide.
+ */
+
 // mon modèle
 export type LangueContextType = {
   langue: string;
@@ -18,12 +26,13 @@ export const LangueContext = React.createContext<LangueContextType>({
   setMessage: () => {},
 });
 
-// les vérif
+// la balise
 export const LangueProvider = (props: any) => {
   const [langue, setLangue] = useState('fr');
   const [message, setMessage] = useState(langue === 'fr' ? Francais : Anglais);
 
   useEffect(() => {
+    // cookie
     const storedLanguage = localStorage.getItem('language');
     const storedMessage = localStorage.getItem('message');
 

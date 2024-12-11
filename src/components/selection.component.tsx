@@ -3,11 +3,17 @@ import { LangueContext } from '../contexts/langue.context';
 import Francais from '../lang/fr.json';
 import Anglais from '../lang/en.json';
 
+/**
+ * Boîte de sélection
+ * @returns 
+ */
 export function LangueSelect() {
   const { langue, setLangue, setMessage } = useContext(LangueContext);
 
+  /** Code emprunté de ChatGPT pour m'aider à surveiller le changement de valeur de la boîte de sélection */
   const changerLangue = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const nouvelleLangue = event.target.value;
+    /** Fin du code emprunté */
     setLangue(nouvelleLangue);
     localStorage.setItem('language', nouvelleLangue);
     
@@ -31,6 +37,7 @@ export function LangueSelect() {
     }
   }, [setLangue, setMessage]);
 
+  // Code emprunté de : https://www.w3schools.com/tags/tag_select.asp
   return (
     <div>
       <select value={langue} onChange={changerLangue}>

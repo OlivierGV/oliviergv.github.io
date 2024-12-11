@@ -32,16 +32,6 @@ export interface IPersonnage {
     dateDeCreation : string
 }
 
-/** 
- * ChatGPT : Pour ne pas passer tous les paramètres à la main dans la fonction, il me recommande de mettre mon IPersonnage dans une autre interface.
- */
-interface PersonnageProp {
-  personnage : IPersonnage;
-}
-/**
- * Fin du code suggéré par ChatGPT
- */
-
 interface PersonnageProp {
   personnage: IPersonnage;
   rafraichirPersonnages: () => void;
@@ -54,6 +44,7 @@ interface PersonnageProp {
  */
 const Personnage = ({ personnage, rafraichirPersonnages } : PersonnageProp ) => {
     return (
+      // Code emprunté et modifié de la documentation de MUI : https://mui.com/material-ui/react-card/
       <Card sx={{ width: 400 }}>
         <Grid container spacing={0} direction="column" alignItems="center">
           <CardMedia
@@ -62,6 +53,7 @@ const Personnage = ({ personnage, rafraichirPersonnages } : PersonnageProp ) => 
           />
         </Grid>
         <Box>
+          { /* Documentation : https://mui.com/material-ui/react-typography/ */}
           <Typography variant="subtitle1" sx={{ textTransform: 'uppercase', fontWeight: 'bold'  }}>{personnage.nomComplet.prenom} {personnage.nomComplet.nom}</Typography>
           <Typography variant="subtitle1">{personnage.classe} - Niveau {personnage.niveau}</Typography>
           <BoutonSuppression

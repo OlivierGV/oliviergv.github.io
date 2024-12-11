@@ -9,7 +9,6 @@ import DonneesPersistantes from "../util/DonneesPersistantes";
 /** Paramètres d'un formulaire */
 interface FormulaireProp {
   mode: 'ajout' | 'edition';
-  // Pour l'édition
   id?: string;
 }
 
@@ -43,6 +42,7 @@ export const Formulaire = (props: FormulaireProp) => {
   const [prenom, setPrenom] = useState("");
   const [nom, setNom] = useState("");
   const [classe, setClasse] = useState("Nain");
+  // à partir d'ici, j'ai demandé à ChatGPT de généré la suite
   const [niveau, setNiveau] = useState(1);
   const [pointsDeVie, setPointsDeVie] = useState(10);
   const [estVivant, setEstVivant] = useState(true);
@@ -54,6 +54,7 @@ export const Formulaire = (props: FormulaireProp) => {
   const [competences, setCompetences] = useState<string[]>([]);
   const [capacites, setCapacites] = useState<string[]>([]);
   const [equipement, setEquipement] = useState<string[]>([]);
+  // fin de la génération par ChatGPT
   // ISOString correspond au format que j'ai choisi pour une date. 
   const [dateDeCreation, setDateDeCreation] = useState(new Date().toISOString());
 
@@ -63,6 +64,7 @@ export const Formulaire = (props: FormulaireProp) => {
       setChargementEnCours(true);
       if (props.mode === "edition") {
         setChargementEnCours(true);
+        // code emprunté de LogRocket pour indiquer des headers particuliers : https://blog.logrocket.com/using-axios-set-request-headers/
         const res = await axios.get(
           `https://api-v3-grul.onrender.com/personnages/${props.id}`, {
             headers: {
@@ -71,6 +73,7 @@ export const Formulaire = (props: FormulaireProp) => {
             }
           }
         );
+        // fin du code emprunté
         setPersonnage(res.data.personnage);
         setChargementEnCours(false);
       } else if (props.mode === "ajout") {
@@ -118,20 +121,25 @@ export const Formulaire = (props: FormulaireProp) => {
           },
         };
         // fin du code généré
+
+        // code emprunté de LogRocket pour indiquer des headers particuliers : https://blog.logrocket.com/using-axios-set-request-headers/
         await axios.put(`https://api-v3-grul.onrender.com/personnages/`, updatedPersonnageData, {
           headers: {
             'Authorization': `Bearer ${DonneesPersistantes.getToken()}`,
             'Accept': 'application/json'
           }
         });
+        // fin du code emprunté
       } else if (props.mode === "ajout") {
+        // code emprunté de LogRocket pour indiquer des headers particuliers : https://blog.logrocket.com/using-axios-set-request-headers/
         const reponse = await axios.post(`https://api-v3-grul.onrender.com/personnages/`, personnageData, {
           headers: {
             'Authorization': `Bearer ${DonneesPersistantes.getToken()}`,
             'Accept': 'application/json'
           }
         });
-        if(reponse.status == 201){
+        // fin du code emprunté
+        if(reponse.status === 201){
           viderFormulaire()
         }
       }
